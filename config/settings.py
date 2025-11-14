@@ -44,15 +44,31 @@ INSTALLED_APPS = [
     'app',
 
     'rest_framework',
-    'rest_framework_simplejwt'
+    'rest_framework_simplejwt',
+    'drf_spectacular',
+    'drf_spectacular_sidecar'
 ]
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+    ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+SPECTACULAR_SETTINGS = {
+
+    # available SwaggerUI configuration parameters
+    # https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/
+    "SWAGGER_UI_SETTINGS": {
+        "deepLinking": True,
+        "persistAuthorization": True,
+        "displayOperationId": True,
+    'SWAGGER_UI_DIST': 'SIDECAR',  # shorthand to use the sidecar instead
+    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
+    'REDOC_DIST': 'SIDECAR',
+    },
 }
 
 SIMPLE_JWT = {
@@ -108,6 +124,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'config.urls'
 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -155,6 +172,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Replace with your email host (e.g., 'smtp.gmail.com')
+EMAIL_PORT = 587  # Or 465 for SSL
+EMAIL_USE_TLS = True  # Or EMAIL_USE_SSL = True for port 465
+EMAIL_HOST_USER = 'aazamov621@gmail.com'
+EMAIL_HOST_PASSWORD = 'TwitterApi'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
